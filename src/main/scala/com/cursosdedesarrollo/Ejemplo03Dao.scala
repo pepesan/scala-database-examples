@@ -20,7 +20,7 @@ class Ejemplo03Dao(var connection: Connection) {
       statement.execute()
     } catch {
       case e: Exception => {
-
+        false
       }
     }
   }
