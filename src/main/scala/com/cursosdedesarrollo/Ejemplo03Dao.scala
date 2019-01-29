@@ -87,7 +87,7 @@ class Ejemplo03Dao(var connection: Connection) {
       val numPoints = rs.getInt("num_points")
       // print the results
       //System.out.format("%s, %s, %s, %s, %s, %s\n", id, firstName, lastName, dateCreated, isAdmin, numPoints)
-      objeto=new Ejemplo03Objeto(id,firstName,lastName,dateCreated,isAdmin,numPoints))
+      objeto=new Ejemplo03Objeto(id,firstName,lastName,dateCreated,isAdmin,numPoints)
     }
     objeto
   }

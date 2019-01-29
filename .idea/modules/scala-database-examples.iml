@@ -24,19 +24,19 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="sbt: org.scala-lang:scala-library:2.12.8:jar" level="project" />
-    <orderEntry type="library" name="sbt: org.springframework:spring-tx:3.1.4.RELEASE:jar" level="project" />
-    <orderEntry type="library" name="sbt: org.springframework:spring-jdbc:3.1.4.RELEASE:jar" level="project" />
-    <orderEntry type="library" name="sbt: org.springframework:spring-expression:3.1.4.RELEASE:jar" level="project" />
-    <orderEntry type="library" name="sbt: org.springframework:spring-core:3.1.4.RELEASE:jar" level="project" />
-    <orderEntry type="library" name="sbt: org.springframework:spring-context:3.1.4.RELEASE:jar" level="project" />
-    <orderEntry type="library" name="sbt: org.springframework:spring-beans:3.1.4.RELEASE:jar" level="project" />
-    <orderEntry type="library" name="sbt: org.springframework:spring-asm:3.1.4.RELEASE:jar" level="project" />
-    <orderEntry type="library" name="sbt: org.springframework:spring-aop:3.1.4.RELEASE:jar" level="project" />
-    <orderEntry type="library" name="sbt: commons-pool:commons-pool:1.5.4:jar" level="project" />
-    <orderEntry type="library" name="sbt: commons-logging:commons-logging:1.1.1:jar" level="project" />
-    <orderEntry type="library" name="sbt: commons-dbcp:commons-dbcp:1.4:jar" level="project" />
-    <orderEntry type="library" name="sbt: aopalliance:aopalliance:1.0:jar" level="project" />
-    <orderEntry type="library" name="sbt: com.google.protobuf:protobuf-java:2.6.0:jar" level="project" />
     <orderEntry type="library" name="sbt: mysql:mysql-connector-java:8.0.11:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.google.protobuf:protobuf-java:2.6.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: aopalliance:aopalliance:1.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: commons-dbcp:commons-dbcp:1.4:jar" level="project" />
+    <orderEntry type="library" name="sbt: commons-logging:commons-logging:1.1.1:jar" level="project" />
+    <orderEntry type="library" name="sbt: commons-pool:commons-pool:1.5.4:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.springframework:spring-aop:3.1.4.RELEASE:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.springframework:spring-asm:3.1.4.RELEASE:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.springframework:spring-beans:3.1.4.RELEASE:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.springframework:spring-context:3.1.4.RELEASE:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.springframework:spring-core:3.1.4.RELEASE:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.springframework:spring-expression:3.1.4.RELEASE:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.springframework:spring-jdbc:3.1.4.RELEASE:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.springframework:spring-tx:3.1.4.RELEASE:jar" level="project" />
   </component>
 </module>
