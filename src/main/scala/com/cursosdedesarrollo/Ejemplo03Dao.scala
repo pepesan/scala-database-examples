@@ -16,17 +16,19 @@ class Ejemplo03Dao(var connection: Connection) {
                              primary key (id)
                          );"""
     val statement=connection.prepareStatement(createTableSQL);
-    val res=statement.execute()
-    res
+    try{
+      statement.execute()
+    } catch {
+      case e: Exception => {
+
+      }
+    }
   }
-
-
-
   def save(objeto:Ejemplo03Objeto):Ejemplo03Objeto ={
-    import java.sql.PreparedStatement
     // the mysql insert statement// the mysql insert statement
 
-    val query: String = " insert into users (first_name, last_name, date_created, is_admin, num_points)" + " values (?, ?, ?, ?, ?)"
+    val query: String = " insert into users (first_name, last_name, date_created, is_admin, num_points)" +
+      " values (?, ?, ?, ?, ?)"
 
     // create the mysql insert preparedstatement
     val preparedStmt: PreparedStatement = connection.prepareStatement(query,Statement.RETURN_GENERATED_KEYS)
@@ -45,7 +47,6 @@ class Ejemplo03Dao(var connection: Connection) {
     objeto.id=id
     objeto
   }
-
   def findAll:List[Ejemplo03Objeto] ={
     val selectSQL="select * from users;"
     val statement=connection.prepareStatement(selectSQL);
@@ -93,7 +94,8 @@ class Ejemplo03Dao(var connection: Connection) {
   }
   def update(objeto:Ejemplo03Objeto):Ejemplo03Objeto ={
     val id=objeto.id
-    val query: String = " update users set first_name=?, last_name=?, date_created=?, is_admin=?, num_points=? " + " where id=?"
+    val query: String = " update users set first_name=?, last_name=?, date_created=?, is_admin=?, num_points=? " +
+      " where id=?"
 
     // create the mysql insert preparedstatement
     val preparedStmt: PreparedStatement = connection.prepareStatement(query,Statement.RETURN_GENERATED_KEYS)

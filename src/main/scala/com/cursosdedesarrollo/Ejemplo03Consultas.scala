@@ -18,12 +18,12 @@ object Ejemplo03Consultas extends App {
 
 
       val meta = connection.getMetaData
-      var res = meta.getTables(null, null, "users",null)
+      var res = meta.getTables("test", null, "users",null)
       if (res.next()){
         println("Tabla ya creada")
       }else{
         val res=dao.createTable
-        println("Resutado: "+res)
+        println("Tabla creada?: "+res)
       }
 
 
