@@ -68,6 +68,29 @@ class Ejemplo03Dao(var connection: Connection) {
     }
     listado
   }
+  def findByID(id:Int):Ejemplo03Objeto={
+    val selectSQL="select * from users where id=?;"
+    val statement=connection.prepareStatement(selectSQL);
+    statement.setInt(1, id)
+    val rs=statement.executeQuery()
+
+    var objeto:Ejemplo03Objeto=null
+    // iterate through the java resultset// iterate through the java resultset
+    if ( {
+      rs.next
+    }) {
+      val id = rs.getInt("id")
+      val firstName = rs.getString("first_name")
+      val lastName = rs.getString("last_name")
+      val dateCreated = rs.getDate("date_created")
+      val isAdmin = rs.getBoolean("is_admin")
+      val numPoints = rs.getInt("num_points")
+      // print the results
+      //System.out.format("%s, %s, %s, %s, %s, %s\n", id, firstName, lastName, dateCreated, isAdmin, numPoints)
+      objeto=new Ejemplo03Objeto(id,firstName,lastName,dateCreated,isAdmin,numPoints))
+    }
+    objeto
+  }
   def update(objeto:Ejemplo03Objeto):Ejemplo03Objeto ={
     val id=objeto.id
     val query: String = " update users set first_name=?, last_name=?, date_created=?, is_admin=?, num_points=? " + " where id=?"

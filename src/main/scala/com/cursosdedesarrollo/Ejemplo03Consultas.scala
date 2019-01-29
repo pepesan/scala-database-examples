@@ -34,7 +34,8 @@ object Ejemplo03Consultas extends App {
       objeto=dao.save(objeto)
       var listado =dao.findAll
       println(listado)
-
+      objeto=dao.findByID(objeto.id)
+      println(objeto)
       objeto.first_name="Paco"
       objeto=dao.update(objeto)
       listado=dao.findAll
