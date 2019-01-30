@@ -70,6 +70,15 @@ object Ejemplo04Mongo{
       override def onComplete(): Unit = println("Insert Complete")
     })
 
+    // Cogiendo todos los documentos
+    collection.find.subscribe(new Observer[Document] {
+      override def onNext(result: Document): Unit = println(result)
+
+      override def onError(e: Throwable): Unit = e.printStackTrace()
+
+      override def onComplete(): Unit = println("Find Completado")
+    })
+
     // Cogiendo un documento
     collection.find.first().subscribe(new Observer[Document] {
       override def onNext(result: Document): Unit = println(result)
