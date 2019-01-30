@@ -30,7 +30,9 @@ object Ejemplo05MongoCodec {
     val totalItemsInCollection = for {
       a1 <- collection.insertOne(Person("Charles", "Babbage"))
       a2 <-  collection.insertOne(Person("George", "Boole"))
+      a3 <-  collection.insertOne(Person("Juan", "Rodríguez"))
       inCollection <- collection.countDocuments()
+
     } yield inCollection
 
     val res = Await.result(totalItemsInCollection.toFuture(),Duration(10, "s"))

@@ -27,7 +27,7 @@ object Ejemplo04Mongo{
     val databases=client.listDatabaseNames()
     println("Databases:")
     databases.subscribe(new Observer[String] {
-      override def onNext(result: String): Unit = println(result)
+      override def onNext(result: String): Unit = println("Database Name:" +result)
 
       override def onError(e: Throwable): Unit = e.printStackTrace()
 
@@ -37,7 +37,8 @@ object Ejemplo04Mongo{
     //Seleccionando una BBDD
     val database: MongoDatabase = client.getDatabase("mydb")
 
-    var collection: MongoCollection[Document] = database.getCollection("test")
+    var collection: MongoCollection[Document] =
+      database.getCollection("test")
     //borrando la base de datos
     collection.drop().subscribe(new Observer[Completed] {
       override def onNext(result: Completed): Unit = println("Next")
@@ -59,8 +60,14 @@ object Ejemplo04Mongo{
     })
 
     // insertando otro documento
-    val doc: Document = Document("name" -> "MongoDB", "type" -> "database",
-      "count" -> 1, "info" -> Document("x" -> 203, "y" -> 102))
+    val doc: Document = Document(
+      "name" -> "MongoDB",
+      "type" -> "database",
+      "count" -> 1,
+      "info" -> Document(
+        "x" -> 203,
+        "y" -> 102)
+    )
 
     collection.insertOne(doc).subscribe(new Observer[Completed] {
       override def onNext(result: Completed): Unit = println("Next Insert: "+result)
@@ -69,14 +76,21 @@ object Ejemplo04Mongo{
 
       override def onComplete(): Unit = println("Insert Complete")
     })
-
+    println("Listado de Documentos")
+    var listadoDocumentos:List[Document] = List[Document]()
     // Cogiendo todos los documentos
     collection.find.subscribe(new Observer[Document] {
-      override def onNext(result: Document): Unit = println(result)
+      override def onNext(result: Document): Unit = {
+        println(result)
+        listadoDocumentos = listadoDocumentos ::: List(result)
+      }
 
       override def onError(e: Throwable): Unit = e.printStackTrace()
 
-      override def onComplete(): Unit = println("Find Completado")
+      override def onComplete(): Unit = {
+        println("Listado de Documentos Completado")
+        println(listadoDocumentos)
+      }
     })
 
     // Cogiendo un documento
@@ -89,7 +103,8 @@ object Ejemplo04Mongo{
     })
 
     // insertando un montón de documentos
-    val documents: IndexedSeq[Document] = (1 to 100) map { i: Int => Document("i" -> i) }
+    val documents: IndexedSeq[Document] =
+      (1 to 100) map { i: Int => Document("i" -> i) }
     insertObservable = collection.insertMany(documents)
 
     val insertAndCount = for {
@@ -217,48 +232,57 @@ object Ejemplo04Mongo{
 
           override def onError(e: Throwable): Unit = e.printStackTrace()
 
-          override def onComplete(): Unit = println("Bulk completado")
-        })
-
-        collection.drop().subscribe(new Observer[Completed] {
-          override def onNext(result: Completed): Unit = println("resultado drop: "+result)
-
-          override def onError(e: Throwable): Unit = e.printStackTrace()
-
-          override def onComplete(): Unit = {
-            println("Borrado completado")
-            collection.bulkWrite(writes, BulkWriteOptions().ordered(false)).subscribe(new Observer[BulkWriteResult] {
-              override def onNext(result: BulkWriteResult): Unit = println("Resultado BulkWrite:" +result)
-
-              override def onError(e: Throwable): Unit = e.printStackTrace()
-
-              override def onComplete(): Unit = println("Bulk Terminado")
-            })
-
-            collection.find().subscribe(new Observer[Document] {
-              override def onNext(result: Document): Unit = println("Documento: "+result)
-
-              override def onError(e: Throwable): Unit = e.printStackTrace()
-
-              override def onComplete(): Unit = println("listado presentado")
-            })
-            // Clean up
+          override def onComplete(): Unit ={
+            println("Bulk completado")
             collection.drop().subscribe(new Observer[Completed] {
               override def onNext(result: Completed): Unit = println("resultado drop: "+result)
 
-              override def onError(e: Throwable): Unit = {
-                println("Fallo en último drop")
-                e.printStackTrace()
-              }
+              override def onError(e: Throwable): Unit = e.printStackTrace()
 
               override def onComplete(): Unit = {
                 println("Borrado completado")
-                // Al ser asíncrono hay que esperar
-                Thread.sleep(1000)
+                collection.bulkWrite(writes, BulkWriteOptions().ordered(false)).subscribe(new Observer[BulkWriteResult] {
+                  override def onNext(result: BulkWriteResult): Unit = println("Resultado BulkWrite:" +result)
+
+                  override def onError(e: Throwable): Unit = e.printStackTrace()
+
+                  override def onComplete(): Unit = {
+                    println("Bulk Terminado")
+                    collection.find().subscribe(new Observer[Document] {
+                      override def onNext(result: Document): Unit = println("Documento: "+result)
+
+                      override def onError(e: Throwable): Unit = e.printStackTrace()
+
+                      override def onComplete(): Unit = {
+                        println("listado presentado")
+                        // Clean up
+                        collection.drop().subscribe(new Observer[Completed] {
+                          override def onNext(result: Completed): Unit = println("resultado drop: "+result)
+
+                          override def onError(e: Throwable): Unit = {
+                            println("Fallo en último drop")
+                            e.printStackTrace()
+                          }
+
+                          override def onComplete(): Unit = {
+                            println("Borrado completado")
+                            // Al ser asíncrono hay que esperar
+                            Thread.sleep(1000)
+                          }
+                        })
+                      }
+                    })
+
+                  }
+                })
+
+
               }
             })
           }
         })
+
+
       }
     })
 
