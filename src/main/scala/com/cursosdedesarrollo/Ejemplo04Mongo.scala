@@ -54,7 +54,7 @@ object Ejemplo04Mongo{
     var insertObservable: Observable[Completed] = collection.insertOne(document)
 
     insertObservable.subscribe(new Observer[Completed] {
-      override def onNext(result: Completed): Unit = println(s"onNext: $result")
+      override def onNext(result: Completed): Unit = println(s"Primer Insert onNext: $result")
       override def onError(e: Throwable): Unit = println(s"onError: $e")
       override def onComplete(): Unit = println("onComplete")
     })
@@ -70,11 +70,16 @@ object Ejemplo04Mongo{
     )
 
     collection.insertOne(doc).subscribe(new Observer[Completed] {
-      override def onNext(result: Completed): Unit = println("Next Insert: "+result)
+      override def onNext(result: Completed): Unit = {
+        println("Next Insert: "+result)
+      }
 
       override def onError(e: Throwable): Unit = e.printStackTrace()
 
-      override def onComplete(): Unit = println("Insert Complete")
+      override def onComplete(): Unit = {
+        println("Insert Complete")
+        println("Documento insertado " +doc)
+      }
     })
     println("Listado de Documentos")
     var listadoDocumentos:List[Document] = List[Document]()
@@ -89,7 +94,8 @@ object Ejemplo04Mongo{
 
       override def onComplete(): Unit = {
         println("Listado de Documentos Completado")
-        println(listadoDocumentos)
+        //println(listadoDocumentos)
+        listadoDocumentos.foreach(println)
       }
     })
 
